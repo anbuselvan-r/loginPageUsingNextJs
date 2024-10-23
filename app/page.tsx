@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaFacebookF, FaLinkedinIn, FaGoogle, FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 
@@ -8,7 +9,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,11 +19,10 @@ export default function Home() {
     const myPassword = "1234";
 
     if (email === myEmail && password === myPassword) {
-      setSuccess("Login Successful!");
+      router.push('/login')
       setError("");
     } else {
       setError("Invalid username or password");
-      setSuccess("");
     }
   };
   return (
@@ -52,12 +52,12 @@ export default function Home() {
                 <div className="bg-gray-100 w-64 p-2 flex items- mb-3">
                   <FaRegEnvelope className="text-gray-400 m-2" />
                   <input type="email" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-100 outline-none text-sm flex-1" />
+                    className="bg-gray-100 outline-none text-sm flex-1" />
                 </div>
                 <div className="bg-gray-100 w-64 p-2 flex items- mb-3">
                   <MdLockOutline className="text-gray-400 m-2" />
                   <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}
-                  className="bg-gray-100 outline-none text-sm flex-1" />
+                    className="bg-gray-100 outline-none text-sm flex-1" />
                 </div>
                 <div className="flex w-64 justify-between mb-5">
                   <label className="flex items-center text-xs"> <input type="checkbox" name="remember" className="mr-1" />Remember me</label>
@@ -66,7 +66,6 @@ export default function Home() {
                 <button className="border-2 bg-green-600 text-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-gray-500 hover:text-black">Sign In</button>
               </form>
               {error && <p className="text-red-500">{error}</p>}
-              {success && <p className="text-red-500">{success}</p>}
             </div>
           </div>
           {/*sign up section*/}
