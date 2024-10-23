@@ -1,7 +1,30 @@
+"use client"
+import React, { useState } from "react";
 import { FaFacebookF, FaLinkedinIn, FaGoogle, FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 
 export default function Home() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // login credentials for validation
+    const myEmail = "test@gmail.com";
+    const myPassword = "1234";
+
+    if (email === myEmail && password === myPassword) {
+      setSuccess("Login Successful!");
+      setError("");
+    } else {
+      setError("Invalid username or password");
+      setSuccess("");
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
@@ -25,21 +48,25 @@ export default function Home() {
                 </a>
               </div>
               <p className="text-gray-400 my-3">or user your email account</p>
-              <div className="flex flex-col items-center">
+              <form onSubmit={handleSubmit} className="flex flex-col items-center">
                 <div className="bg-gray-100 w-64 p-2 flex items- mb-3">
                   <FaRegEnvelope className="text-gray-400 m-2" />
-                  <input type="email" name="email" placeholder="Email" className="bg-gray-100 outline-none text-sm flex-1" />
+                  <input type="email" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}
+                  className="bg-gray-100 outline-none text-sm flex-1" />
                 </div>
                 <div className="bg-gray-100 w-64 p-2 flex items- mb-3">
                   <MdLockOutline className="text-gray-400 m-2" />
-                  <input type="password" name="password" placeholder="Password" className="bg-gray-100 outline-none text-sm flex-1" />
+                  <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}
+                  className="bg-gray-100 outline-none text-sm flex-1" />
                 </div>
                 <div className="flex w-64 justify-between mb-5">
                   <label className="flex items-center text-xs"> <input type="checkbox" name="remember" className="mr-1" />Remember me</label>
                   <a href="#" className="text-xs">Forgot Password ?</a>
                 </div>
-                <a href="" className="border-2 bg-green-600 text-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-gray-500 hover:text-black">Sign Up</a>
-              </div>
+                <button className="border-2 bg-green-600 text-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-gray-500 hover:text-black">Sign In</button>
+              </form>
+              {error && <p className="text-red-500">{error}</p>}
+              {success && <p className="text-red-500">{success}</p>}
             </div>
           </div>
           {/*sign up section*/}
@@ -47,7 +74,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold mb-2">Hello, Friend!</h2>
             <div className="border-2 w-10 border-white inline-block mb-2"></div>
             <p className="mb-10">Fill up personal information with us and start journey with us.</p>
-            <a href="" className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-green-600">Sign Up</a>
+            <button className="border-2 border-white rounded-full px-12 py-2 inline-block font-semibold hover:bg-white hover:text-green-600">Sign Up</button>
           </div>
         </div>
       </main>
